@@ -26,6 +26,12 @@ let persons = [
 
 app.use(express.json());
 
+const generateId = () => {
+  const newId =
+    Math.floor(Math.random() * (10000 - persons.length)) + persons.length;
+  return newId.toString();
+};
+
 app.get("/info", (request, response) => {
   let infoText = `Phonebook has info for ${persons.length} people`;
   let date = new Date();
@@ -50,6 +56,32 @@ app.delete("/api/persons/:id", (request, response) => {
   const id = request.params.id;
   persons = persons.filter((person) => person.id !== id);
   response.status(204).end();
+});
+
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: "name or number missing",
+    });
+  }
+  if (persons.find((person) => person.name === body.name)) {
+    return response.status(400).json({
+      error: "name must be unique",
+    });
+  }
+  if (persons.find((person) => person.number === body.number)) {
+    return response.status(400).json({
+      error: "number must be unique",
+    });
+  }
+  const person = {
+    id: generateId(),
+    name: body.name,
+    number: body.number,
+  };
+  persons = persons.concat(person);
+  response.json(person);
 });
 
 const PORT = 3001;
