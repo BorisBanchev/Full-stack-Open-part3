@@ -5,7 +5,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build:ui": "rm -rf dist && cd ~/Fullstack-Open-Course/Osa2/puhelinluettelo/ && npm run build && cp -r dist ~/Full-stack-Open-part3/puhelinluettelo-backend",
+    "deploy": "fly deploy",
+    "deploy:full": "npm run build:ui && npm run deploy",
+    "logs:prod": "fly logs"
   },
   "author": "Boris Banchev",
   "license": "MIT",
