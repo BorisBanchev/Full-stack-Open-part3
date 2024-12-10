@@ -7,7 +7,7 @@
     "dev": "nodemon index.js",
     "start": "node index.js",
     "build:ui": "rm -rf dist && cd ~/Fullstack-Open-Course/Osa2/puhelinluettelo/ && npm run build && cp -r dist ~/Full-stack-Open-part3/puhelinluettelo-backend",
-    "deploy": "fly deploy",
+    "deploy": "cd ~/Full-stack-Open-part3/puhelinluettelo-backend && fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
     "logs:prod": "fly logs"
   },
@@ -16,6 +16,7 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.8.4",
     "morgan": "^1.10.0"

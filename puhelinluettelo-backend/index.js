@@ -1,7 +1,10 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+require("dotenv").config();
 const app = express();
+const Person = require("./models/person");
+const port = process.env.PORT;
 
 morgan.token("body", (req) => JSON.stringify(req.body));
 
@@ -12,29 +15,6 @@ app.use(
 app.use(cors());
 app.use(express.static("dist"));
 
-let persons = [
-  {
-    id: "1",
-    name: "Arto Hellas",
-    number: "040-123456",
-  },
-  {
-    id: "2",
-    name: "Ada Lovelace",
-    number: "39-44-5323523",
-  },
-  {
-    id: "3",
-    name: "Dan Abramov",
-    number: "12-43-234345",
-  },
-  {
-    id: "4",
-    name: "Mary Poppendieck",
-    number: "39-23-6423122",
-  },
-];
-
 app.use(express.json());
 
 const generateId = () => {
@@ -44,13 +24,17 @@ const generateId = () => {
 };
 
 app.get("/info", (request, response) => {
-  let infoText = `Phonebook has info for ${persons.length} people`;
-  let date = new Date();
-  response.send(`<b>${infoText}</b><br><br><b>${date}</b>`);
+  Person.countDocuments({}).then((count) => {
+    let infoText = `Phonebook has info for ${count} people`;
+    let date = new Date();
+    response.send(`<b>${infoText}</b><br><br><b>${date}</b>`);
+  });
 });
 
 app.get("/api/persons", (request, response) => {
-  response.json(persons);
+  Person.find({}).then((persons) => {
+    response.json(persons);
+  });
 });
 
 app.get("/api/persons/:id", (request, response) => {
@@ -95,7 +79,6 @@ app.post("/api/persons", (request, response) => {
   response.json(person);
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
