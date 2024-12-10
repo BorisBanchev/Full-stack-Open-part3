@@ -1,7 +1,7 @@
-POST https://puhelinluettelo-backend-bold-resonance-9755.fly.dev/api/persons
+POST http://localhost:3001/api/persons/
 Content-Type: application/json
 
 {
-  "name": "New",
-  "number": "222222222"
+  "name": "Boris",
+  "number": "111122221111"
 }

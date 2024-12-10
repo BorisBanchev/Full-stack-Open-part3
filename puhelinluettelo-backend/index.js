@@ -17,12 +17,6 @@ app.use(express.static("dist"));
 
 app.use(express.json());
 
-const generateId = () => {
-  const newId =
-    Math.floor(Math.random() * (10000 - persons.length)) + persons.length;
-  return newId.toString();
-};
-
 app.get("/info", (request, response) => {
   Person.countDocuments({}).then((count) => {
     let infoText = `Phonebook has info for ${count} people`;
@@ -60,23 +54,14 @@ app.post("/api/persons", (request, response) => {
       error: "name or number missing",
     });
   }
-  if (persons.find((person) => person.name === body.name)) {
-    return response.status(400).json({
-      error: "name must be unique",
-    });
-  }
-  if (persons.find((person) => person.number === body.number)) {
-    return response.status(400).json({
-      error: "number must be unique",
-    });
-  }
-  const person = {
-    id: generateId(),
+
+  const person = new Person({
     name: body.name,
     number: body.number,
-  };
-  persons = persons.concat(person);
-  response.json(person);
+  });
+  person.save().then((savedPerson) => {
+    response.json(savedPerson);
+  });
 });
 
 app.listen(port, () => {

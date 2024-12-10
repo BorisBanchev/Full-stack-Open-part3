@@ -1,1 +1,1 @@
-GET https://puhelinluettelo-backend-bold-resonance-9755.fly.dev/api/persons
+GET http://localhost:3001/api/persons/
