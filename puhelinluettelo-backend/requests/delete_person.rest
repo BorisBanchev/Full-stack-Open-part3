@@ -1,1 +1,1 @@
-DELETE https://puhelinluettelo-backend-bold-resonance-9755.fly.dev/api/persons/1
+DELETE https://puhelinluettelo-backend-bold-resonance-9755.fly.dev/api/persons/67575bd0a0352f4f43f02f1a
