@@ -9,7 +9,8 @@
     "build:ui": "rm -rf dist && cd ~/Fullstack-Open-Course/Osa2/puhelinluettelo/ && npm run build && cp -r dist ~/Full-stack-Open-part3/puhelinluettelo-backend",
     "deploy": "cd ~/Full-stack-Open-part3/puhelinluettelo-backend && fly deploy",
     "deploy:full": "npm run build:ui && npm run deploy",
-    "logs:prod": "fly logs"
+    "logs:prod": "fly logs",
+    "lint": "eslint ."
   },
   "author": "Boris Banchev",
   "license": "MIT",
@@ -22,7 +23,11 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.16.0",
     "@flydotio/dockerfile": "^0.5.9",
+    "@stylistic/eslint-plugin-js": "^2.12.1",
+    "eslint": "^9.16.0",
+    "globals": "^15.13.0",
     "nodemon": "^3.1.7"
   }
 }
